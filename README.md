@@ -41,7 +41,7 @@ graphql-ts-psql stack, inspired by [Ben Awad](https://www.youtube.com/channel/UC
 2. Create a 'config' folder in src and add the required
    environment variables _( see environment variables section )_
 3. Run 'yarn' in the root of the project
-4. Make sure postgresql is up and running on port 27017 (change
+4. Make sure postgresql is up and running on port 5432 (change
    port as required in ormconfig.json)
 5. Run 'yarn dev' to start the server in development mode.
 6. Enjoy!
