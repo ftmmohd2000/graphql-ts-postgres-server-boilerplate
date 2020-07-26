@@ -1,6 +1,6 @@
 # Graphql-Typescript-PostgreSQL Boilerplate
 
-<center style="display:flex; justify-content:space-around;" >
+<center style="display:flex; justify-content:space-around; flex-flow: row nowrap" >
   <img 
     src="./assets/images/GraphQL_Logo.svg" 
     alt="GraphQL Icon" 
