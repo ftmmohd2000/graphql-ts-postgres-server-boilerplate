@@ -35,7 +35,7 @@ graphql-ts-psql stack, inspired by [Ben Awad](https://www.youtube.com/channel/UC
 
 ---
 
-## Geting set up
+## Getting set up
 
 1. Clone this repo onto your local machine
 2. Create a 'config' folder in src and add the required
