@@ -50,6 +50,8 @@ graphql-ts-psql stack, inspired by [Ben Awad](https://www.youtube.com/channel/UC
 
 ## Environment Variables
 
+_Check .env.example for a skeleton_
+
 - NODE_ENV - set node environment
   > _production, development, or test_
 - SESSION_SECRET - set secret key for express-session
