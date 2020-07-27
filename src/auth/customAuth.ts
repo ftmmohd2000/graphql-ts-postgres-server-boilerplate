@@ -1,11 +1,9 @@
 import { AuthChecker, ResolverData } from "type-graphql";
 import { MyContext } from "../types/Context";
 
-export const customAuth: AuthChecker<MyContext, number> = async (
-  { context: { user } }: ResolverData<MyContext>,
-  roles
-) => {
+export const customAuth: AuthChecker<MyContext, number> = ({
+  context: { user }
+}: ResolverData<MyContext>) => {
   if (!user) return false;
-
-  return user.role >= roles[0];
+  return true;
 };

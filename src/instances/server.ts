@@ -4,12 +4,17 @@ import session from "express-session";
 import { GraphQLServer } from "graphql-yoga";
 import RedisStore from "rate-limit-redis";
 import { buildSchema } from "type-graphql";
-import { customAuth } from "../auth/customAuth";
 import { redisSessionPrefix, userSessionPrefix } from "../constants";
 import { User } from "../entity/User";
 import { redis } from "./redis";
 import resolvers from "../modules";
 import { createTypeormConn } from "../utils/createTypeormConn";
+import passport from "passport";
+import { googleAuthRouter } from "../routers/googleAuth";
+import { customAuth } from "../auth/customAuth";
+import { githubAuthRouter } from "../routers/githubAuth";
+import { twitterAuthRouter } from "../routers/twitterAuth";
+import { facebookAuthRouter } from "../routers/facebookAuth";
 
 export const startServer = async () => {
   // create schema using resolvers
@@ -22,9 +27,20 @@ export const startServer = async () => {
   const server = new GraphQLServer({
     schema: schema as any,
     context: async ({ request, response }) => {
-      const user = await User.findOne({
-        where: { id: request.session!.userId }
-      });
+      let user: User | undefined;
+
+      if (request.session) {
+        if (request.session.passport)
+          // OAuth login
+          user = await User.findOne({
+            where: { id: request.session.passport.user }
+          });
+        // manual login
+        else
+          user = await User.findOne({
+            where: { id: request.session!.userId }
+          });
+      }
 
       let sessionIDs: string[];
       if (user) {
@@ -79,6 +95,13 @@ export const startServer = async () => {
       }
     })
   );
+
+  server.express.use(passport.initialize());
+  server.express.use(passport.session());
+
+  server.express.use(googleAuthRouter);
+  server.express.use(githubAuthRouter);
+  server.express.use(twitterAuthRouter);
 
   // enable cors from frontend
   const cors = {

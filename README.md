@@ -29,7 +29,7 @@ graphql-ts-psql stack, inspired by [Ben Awad](https://www.youtube.com/channel/UC
 - TypeGraphQL annotations making it extremely easy to create
   new GraphQL features.
 - Manual User authentication
-- OAuth with **Google, Github, Facebook, Twitter**
+- OAuth with **Google, Github, and Twitter**
 - Tests with a 100% coverage _( Jest )_
 - Feature based system for quick addition of new modules
 

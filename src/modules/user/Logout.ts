@@ -1,10 +1,10 @@
 import { Authorized, Ctx, Mutation, Resolver } from "type-graphql";
-import { redisSessionPrefix, USER, userSessionPrefix } from "../../constants";
+import { redisSessionPrefix, userSessionPrefix } from "../../constants";
 import { MyContext } from "../../types/Context";
 
 @Resolver()
 class LogoutResolver {
-  @Authorized(USER)
+  @Authorized()
   @Mutation(() => Boolean)
   async logout(@Ctx() { req, res }: MyContext) {
     return new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ class LogoutResolver {
   }
 
   @Mutation(() => Boolean)
-  @Authorized(USER)
+  @Authorized()
   async logoutAll(@Ctx() { res, redis, sessionIDs, user }: MyContext) {
     const unresolved: Promise<number>[] = [];
 

@@ -22,6 +22,6 @@ export class RegisterInputType extends PasswordInputType {
   @Field()
   password: string;
 
-  @Field()
+  @Field({ nullable: true })
   role: string;
 }

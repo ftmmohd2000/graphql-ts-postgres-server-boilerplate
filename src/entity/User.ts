@@ -1,5 +1,5 @@
 import { hash } from "bcrypt";
-import { Field, ID, ObjectType, Root, Authorized } from "type-graphql";
+import { Field, ID, ObjectType, Root } from "type-graphql";
 import {
   AfterLoad,
   BaseEntity,
@@ -10,7 +10,6 @@ import {
   PrimaryColumn
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { USER } from "../constants";
 
 @ObjectType()
 @Entity("users")
@@ -25,7 +24,7 @@ export class User extends BaseEntity {
 
   private tempPassword: string;
 
-  @Column()
+  @Column("text", { nullable: true })
   password: string;
 
   @Field()
@@ -37,17 +36,12 @@ export class User extends BaseEntity {
   lastName: string;
 
   @Field()
-  @Column()
-  role: number;
-
-  @Authorized(USER)
-  @Field()
   name(@Root() parent: User): string {
     return `${parent.firstName} ${parent.lastName}`;
   }
 
   @Field()
-  @Column()
+  @Column("int", { nullable: true })
   age: number;
 
   @Column({ default: process.env.NODE_ENV === "development" })
@@ -55,7 +49,7 @@ export class User extends BaseEntity {
 
   @BeforeInsert()
   async generatePasswordAndHash() {
-    this.password = await hash(this.password, 12);
+    if (this.password) this.password = await hash(this.password, 12);
     this.id = uuid();
   }
 
